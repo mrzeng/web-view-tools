@@ -1,11 +1,11 @@
 {
   "name": "web-view-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "淘宝小程序webView 开发需要用到的一些工具",
   "scripts": {
     "commit": "git-cz",
     "build": "rollup -c",
-    "publish": "npm run build && npm publish"
+    "prepublish": "npm run build"
   },
   "husky": {
     "hooks": {
