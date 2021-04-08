@@ -4,7 +4,7 @@ import { ID_PREFIX, uniqueId } from './uniqueId';
 interface EventResult<T = any> {
   data: T;
   success: boolean;
-  error?: Error;
+  error?: string;
   eventId: string;
 }
 
@@ -32,7 +32,7 @@ export function invoke<T>(type: string, options: InvokeOptions<T>): void {
     if (result.success) {
       options.success(result.data);
     } else {
-      options.error(result.error!);
+      options.error(new Error(result.error!));
     }
   });
 
