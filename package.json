@@ -19,7 +19,7 @@
     }
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "http://nexus.darcytech.com/repository/npm/"
   },
   "files": [
     "lib",
