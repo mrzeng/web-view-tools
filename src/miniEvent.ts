@@ -1,7 +1,7 @@
 interface EventResult<T = any> {
   data?: T;
   success: boolean;
-  error?: Error;
+  error?: string;
   eventId: string;
 }
 
@@ -31,9 +31,9 @@ export const asyncEmit = ({ type, data, eventId }: { type: string; data: any; ev
         eventId,
       };
     })
-    .catch(e => {
+    .catch((e: Error) => {
       return {
-        error: e,
+        error: e.message || e.toString(),
         success: false,
         eventId,
       };

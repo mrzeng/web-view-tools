@@ -7,13 +7,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: './tsconfig.json',
   },
-  extends: [
-    'airbnb-typescript/base',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:jest/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['airbnb-typescript/base', 'plugin:@typescript-eslint/recommended', 'plugin:jest/recommended', 'plugin:prettier/recommended'],
   plugins: ['jest'],
   globals: {
     my: true,
