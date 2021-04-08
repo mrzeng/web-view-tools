@@ -1,0 +1,17 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.run": "onSave",
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "eslint.nodePath": "./node_modules",
+  "files.autoSave": "onFocusChange",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "cSpell.words": ["commitlint", "yinliu"],
+  "prettier.prettierPath": "./node_modules"
+}
