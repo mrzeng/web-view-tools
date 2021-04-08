@@ -1,5 +1,5 @@
 {
-  "name": "@darcytech/web-view-tools",
+  "name": "web-view-tools",
   "version": "1.0.0",
   "description": "淘宝小程序webView 开发需要用到的一些工具",
   "scripts": {
