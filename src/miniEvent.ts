@@ -15,6 +15,14 @@ export const registry = (key: string, listener: Listener) => {
   events[key] = listener;
 };
 
+const safeParse = (str: string) => {
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    return { msg: str };
+  }
+};
+
 export const asyncEmit = ({ type, data, eventId }: { type: string; data: any; eventId: string }): Promise<EventResult> => {
   return Promise.resolve()
     .then(() => {
@@ -32,6 +40,14 @@ export const asyncEmit = ({ type, data, eventId }: { type: string; data: any; ev
       };
     })
     .catch((e: Error) => {
+      const separator = ':::';
+      if (e.toString && e.toString().split(separator)[1]) {
+        return {
+          error: safeParse(e.toString().split(separator)[1]),
+          success: false,
+          eventId,
+        };
+      }
       return {
         error: e.message || e.toString(),
         success: false,
