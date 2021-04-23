@@ -32,7 +32,11 @@ export function invoke<T>(type: string, options: InvokeOptions<T>): void {
     if (result.success) {
       options.success(result.data);
     } else {
-      options.error(new Error(result.error!));
+      try {
+        options.error(JSON.parse(result.error!));
+      } catch (error) {
+        options.error(new Error(result.error!));
+      }
     }
   });
 
