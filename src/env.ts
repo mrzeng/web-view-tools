@@ -2,7 +2,8 @@
 // 小程序中没有window 因此需要使用 typeof 判断
 export const isMiniApp = typeof window !== 'undefined' && window.self !== window.top;
 // local web-view 的url 是https://webview/ 开头的
-export const isLocalWebview = typeof window !== 'undefined' && window.location.href.indexOf('https://webview/') === 0;
+export const isLocalWebview =
+  typeof window !== 'undefined' && (window.location.href.indexOf('https://webview/') === 0 || window.name === 'localWebView');
 
 // 页面是嵌入在web-view且不是 local web-view,就是 web-view
 export const isWebView = isMiniApp && !isLocalWebview;
