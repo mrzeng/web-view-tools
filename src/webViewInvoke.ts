@@ -48,11 +48,11 @@ export function callbackInvoke<T>(options: InvokeOptions<T>): void {
   });
 }
 
-export function invoke<T>(options: { type: string; param: any }): Promise<EventResult<T>> {
+export function invoke<T>(options: { type: string; data: any }): Promise<EventResult<T>> {
   return new Promise((resolve, reject) => {
     callbackInvoke<T>({
       type: options.type,
-      data: options.param,
+      data: options.data,
       success: result => resolve(result),
       error: err => reject(err),
     });

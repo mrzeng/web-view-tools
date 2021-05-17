@@ -1,6 +1,6 @@
 {
   "name": "web-view-tools",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "淘宝小程序webView 开发需要用到的一些工具",
   "scripts": {
     "commit": "git-cz",
