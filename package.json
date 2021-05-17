@@ -1,11 +1,10 @@
 {
   "name": "web-view-tools",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "淘宝小程序webView 开发需要用到的一些工具",
   "scripts": {
     "commit": "git-cz",
-    "build": "rollup -c",
-    "prepublish": "npm run build"
+    "build": "rollup -c"
   },
   "husky": {
     "hooks": {
@@ -19,13 +18,14 @@
     }
   },
   "publishConfig": {
-    "registry": "http://nexus.darcytech.com/repository/npm-hosted/"
+    "registry": "https://registry.npmjs.org/"
   },
   "files": [
     "lib",
     "types"
   ],
   "main": "lib/web-view-tools.js",
+  "types": "types/index.d.ts",
   "devDependencies": {
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^18.0.0",

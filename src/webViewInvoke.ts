@@ -11,6 +11,7 @@ interface EventResult<T = any> {
 interface InvokeOptions<T = any> {
   success(result: EventResult<T>): void;
   error(error: Error): void;
+  type: string;
   data: Record<string, any>;
 }
 
@@ -25,7 +26,7 @@ if (typeof my !== 'undefined') {
   };
 }
 
-export function invoke<T>(type: string, options: InvokeOptions<T>): void {
+export function callbackInvoke<T>(options: InvokeOptions<T>): void {
   const eventId = uniqueId();
 
   events.on(eventId, result => {
@@ -41,16 +42,17 @@ export function invoke<T>(type: string, options: InvokeOptions<T>): void {
   });
 
   my.postMessage({
-    type,
+    type: options.type,
     data: options.data,
     eventId,
   });
 }
 
-export function invokePromise<T>(type: string, param: any): Promise<EventResult<T>> {
+export function invoke<T>(options: { type: string; param: any }): Promise<EventResult<T>> {
   return new Promise((resolve, reject) => {
-    invoke<T>(type, {
-      data: param,
+    callbackInvoke<T>({
+      type: options.type,
+      data: options.param,
       success: result => resolve(result),
       error: err => reject(err),
     });

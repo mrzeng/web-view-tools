@@ -11,11 +11,11 @@ interface Listener {
 
 const events: Record<string, Listener> = {};
 
-export const registry = (key: string, listener: Listener) => {
-  events[key] = listener;
+export const registry = (type: string, listener: Listener) => {
+  events[type] = listener;
 };
 
-export const asyncEmit = ({ type, data, eventId }: { type: string; data: any; eventId: string }): Promise<EventResult> => {
+export const trigger = ({ type, data, eventId }: { type: string; data: any; eventId: string }, webViewId: string): Promise<EventResult> => {
   return Promise.resolve()
     .then(() => {
       const fn = events[type];
@@ -45,5 +45,15 @@ export const asyncEmit = ({ type, data, eventId }: { type: string; data: any; ev
         success: false,
         eventId,
       };
+    })
+    .then(result => {
+      if (webViewId) {
+        const webViewContext = my.createWebViewContext(webViewId);
+        if (!webViewContext) {
+          throw new Error(`id 为 ${webViewId} 的webview组件不存在`);
+        }
+        webViewContext.postMessage(result);
+      }
+      return result;
     });
 };
