@@ -15,6 +15,8 @@ export const registry = (type: string, listener: Listener) => {
   events[type] = listener;
 };
 
+const webViewContextCache: Record<string, any> = {};
+
 export const trigger = ({ type, data, eventId }: { type: string; data: any; eventId: string }, webViewId: string): Promise<EventResult> => {
   return Promise.resolve()
     .then(() => {
@@ -48,7 +50,11 @@ export const trigger = ({ type, data, eventId }: { type: string; data: any; even
     })
     .then(result => {
       if (webViewId) {
-        const webViewContext = my.createWebViewContext(webViewId);
+        let webViewContext = webViewContextCache[webViewId];
+        if (!webViewContext) {
+          webViewContext = my.createWebViewContext(webViewId);
+          webViewContextCache[webViewId] = webViewContext;
+        }
         if (!webViewContext) {
           throw new Error(`id 为 ${webViewId} 的webview组件不存在`);
         }

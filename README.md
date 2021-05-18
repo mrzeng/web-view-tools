@@ -191,7 +191,9 @@ my.createWebViewContext(localWebViewId).postMessage({
 
 #### 入参
 
-入参来自 local-webview 组件的 onMessage 处理函数。
+第一个参数来自 local-webview 组件的 onMessage 处理函数。
+
+第二个参数可选，表示 local-webview 的 id。如果传了 id，会自动把结果传给 local-webview，并且 webViewContext 会根据 id 缓存一份。如果你的 local-webview 组件会销毁重新创建，就不要传 id。
 
 #### 结果
 
