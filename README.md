@@ -12,6 +12,8 @@ yarn add web-view-tools --dev
 npm i web-view-tools --save-dev
 ```
 
+# [例子](https://github.com/noshower/web-view-tools/tree/main/example)
+
 # 小程序与 h5 代码如何通信
 
 ## 场景 1：由 h5 端主动发起的事件
