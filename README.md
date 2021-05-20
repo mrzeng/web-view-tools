@@ -12,7 +12,7 @@ yarn add web-view-tools --dev
 npm i web-view-tools --save-dev
 ```
 
-# [例子](https://github.com/noshower/web-view-tools/tree/main/example)
+# 点击[这里](https://github.com/noshower/web-view-tools/tree/main/example)查看完整例子
 
 # 小程序与 h5 代码如何通信
 
