@@ -1,0 +1,5 @@
+<view>
+  <web-view id="{{localWebViewId}}" src="https://webview/index.html" onMessage="onWebViewMessage" mini>
+  </web-view>
+  <button size="default" type="primary" onTap="handleTap">发起通知</button>
+</view>
