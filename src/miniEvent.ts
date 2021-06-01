@@ -1,7 +1,9 @@
+type ErrorInfo = Record<string, any>;
+
 interface EventResult<T = any> {
   data?: T;
   success: boolean;
-  error?: string;
+  error?: ErrorInfo;
   eventId: string;
 }
 
@@ -11,13 +13,23 @@ interface Listener {
 
 const events: Record<string, Listener> = {};
 
-export const registry = (type: string, listener: Listener) => {
-  events[type] = listener;
+export const registry = (key: string, listener: Listener) => {
+  events[key] = listener;
 };
 
-const webViewContextCache: Record<string, any> = {};
+function transformError(e: any): ErrorInfo {
+  if (typeof e !== 'object' || e == null) {
+    return {
+      message: e,
+    };
+  }
+  const keys = Object.getOwnPropertyNames(e);
+  return keys.reduce((prev, key) => {
+    return { ...prev, [key]: e[key] };
+  }, {});
+}
 
-export const trigger = ({ type, data, eventId }: { type: string; data: any; eventId: string }, webViewId: string): Promise<EventResult> => {
+export const asyncEmit = ({ type, data, eventId }: { type: string; data: any; eventId: string }): Promise<EventResult> => {
   return Promise.resolve()
     .then(() => {
       const fn = events[type];
@@ -33,33 +45,11 @@ export const trigger = ({ type, data, eventId }: { type: string; data: any; even
         eventId,
       };
     })
-    .catch((e: Error) => {
-      const separator = ':::';
-      if (e.toString && e.toString().split(separator)[1]) {
-        return {
-          error: e.toString().split(separator)[1],
-          success: false,
-          eventId,
-        };
-      }
+    .catch(e => {
       return {
-        error: e.message || e.toString(),
+        error: transformError(e),
         success: false,
         eventId,
       };
-    })
-    .then(result => {
-      if (webViewId) {
-        let webViewContext = webViewContextCache[webViewId];
-        if (!webViewContext) {
-          webViewContext = my.createWebViewContext(webViewId);
-          webViewContextCache[webViewId] = webViewContext;
-        }
-        if (!webViewContext) {
-          throw new Error(`id 为 ${webViewId} 的webview组件不存在`);
-        }
-        webViewContext.postMessage(result);
-      }
-      return result;
     });
 };

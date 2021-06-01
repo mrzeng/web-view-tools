@@ -4,14 +4,13 @@ import { ID_PREFIX, uniqueId } from './uniqueId';
 interface EventResult<T = any> {
   data: T;
   success: boolean;
-  error?: string;
+  error?: Record<string, any>;
   eventId: string;
 }
 
 interface InvokeOptions<T = any> {
   success(result: EventResult<T>): void;
-  error(error: Error): void;
-  type: string;
+  error(error: Record<string, any>): void;
   data: Record<string, any>;
 }
 
@@ -26,33 +25,28 @@ if (typeof my !== 'undefined') {
   };
 }
 
-export function callbackInvoke<T>(options: InvokeOptions<T>): void {
+export function invoke<T>(type: string, options: InvokeOptions<T>): void {
   const eventId = uniqueId();
 
   events.on(eventId, result => {
     if (result.success) {
       options.success(result.data);
     } else {
-      try {
-        options.error(JSON.parse(result.error!));
-      } catch (error) {
-        options.error(new Error(result.error!));
-      }
+      options.error(result.error!);
     }
   });
 
   my.postMessage({
-    type: options.type,
+    type,
     data: options.data,
     eventId,
   });
 }
 
-export function invoke<T>(options: { type: string; data: any }): Promise<EventResult<T>> {
+export function invokePromise<T>(type: string, param: any): Promise<EventResult<T>> {
   return new Promise((resolve, reject) => {
-    callbackInvoke<T>({
-      type: options.type,
-      data: options.data,
+    invoke<T>(type, {
+      data: param,
       success: result => resolve(result),
       error: err => reject(err),
     });

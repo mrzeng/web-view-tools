@@ -1,3 +1,3 @@
-export { invoke, callbackInvoke, subscribe, unsubscribe } from './webViewInvoke';
+export { invoke, invokePromise, subscribe, unsubscribe } from './webViewInvoke';
 export { isMiniApp, isLocalWebview } from './env';
-export { registry, trigger } from './miniEvent';
+export { registry, asyncEmit } from './miniEvent';
